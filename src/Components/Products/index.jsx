@@ -1,53 +1,28 @@
-const initialState = {
-  products: [
-    {name: 'Red Book', quantity: 0},
-    {name: 'Blue Book', quantity: 0},
-    {name: 'Green Book', quantity: 0},
-  ],
-  totalQuantity: 0,
-}
+import { Card } from "@mui/material";
+import { connect } from "react-redux";
 
-function productReducer(state = initialState, action){
-  switch(action.type){
-    case 'INCREMENT':
-      return{
-        ...state,
-        products: state.products.map(product => {
-          if(product.name === action.payload.name){
-            return{
-              name:product.name,
-              quantity: product.quantity + 1,
-            }
-          }
-          return product;
-        }),
-        totalQuantity: state.totalQuantity + 1,
+//-----Products Function-----\\
+const Products = ({ products, activeCategory }) => {
+  return (
+    <>
+      {activeCategory && <h2>{activeCategory.displayName}</h2>}
+      {activeCategory && <p>{activeCategory.description}</p>}
+      {activeCategory && products.map((product, idx) => (
+          <Card key={`products-${idx}`} >
+            {product.name}
+          </Card>
+        ))
       }
-    case 'DECREMENT':
-      return{
-        ...state,
-        products: state.products.map(product => {
-          if(product.name === action.payload.name){
-            return{
-              name:product.name,
-              quantity: product.quantity + 1,
-            }
-          }
-          return product;
-        }),
-        totalQuantity: state.totalQuantity + 1,
-      }
-    default:
-      return state
+    </>
+  )
+};
+
+//-----Map State To Props-----\\
+const mapStateToProps = ({ store }) => {
+  return {
+    products: store.products,
+    activeCategory: store.activeCategory,
   }
 }
 
-// const Products = () => {
-//   return (
-//     <>
-//       <p>Proof of life for Products Component</p>
-//     </>
-//   )
-// }
-
-export default productReducer;
+export default connect(mapStateToProps)(Products);

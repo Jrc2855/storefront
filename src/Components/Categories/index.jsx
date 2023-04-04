@@ -1,25 +1,40 @@
+import { Button, ButtonGroup } from "@mui/material";
 import { connect } from "react-redux";
+import { set } from "../../Store/reducer";
 
-const Categories = ({ totalQuantity, products }) => {
+
+//-----Category Display Function-----\\
+const Categories = ({ categories, set }) => {
   return (
     <>
-      <h1>Total Product Quantity {totalQuantity}</h1>
-      {
-        products.map((product, idx) => (
-          <article key={`products-${idx}`}>
-            <h5>{product.name} has {product.quantity} in stock</h5>
-          </article>
-        ))
-      }
+      <h2>These are da Categories</h2>
+      <ButtonGroup variant="text" aria-label="category button group">
+        {
+          categories.map((category, idx) => (
+            <Button
+              key={`categories-${idx}`}
+              onClick={() => set(category)}
+            >
+              {category.displayName}
+            </Button>
+          ))
+        }
+      </ButtonGroup>
     </>
   )
 };
 
-const mapStateToProps = ({ quantity }) => {
+//-----Map State To Props-----\\
+const mapStateToProps = ({ store }) => {
   return {
-    totalQuantity: quantity.totalQuantity,
-    products: quantity.products,
+    categories: store.categories,
   }
 }
 
-export default connect(mapStateToProps)(Categories);
+//-----Map Dispatch To Props-----\\
+const mapDispatchToProps = {
+  set,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+

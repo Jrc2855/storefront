@@ -1,7 +1,9 @@
 const Header = () => {
   return(
-    <h1>Header Goes Here</h1>
+    <>
+    <h1>THISISTHECOMPANYNAME INC.</h1>
+    </>
   )
-}
+};
 
 export default Header;
