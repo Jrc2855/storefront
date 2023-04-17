@@ -1,7 +1,18 @@
+import { Grid } from '@mui/material';
+import { useSelector } from 'react-redux';
+
 const Header = () => {
-  return(
+  const { cart } = useSelector(state => state)
+  return (
     <>
-    <h1>THISISTHECOMPANYNAME INC.</h1>
+      <Grid container p={2}>
+        <Grid item>
+          <h4>THISISTHECOMPANYNAME INC.</h4>
+        </Grid>
+        <Grid item style={{textAlign: 'right', alignSelf: 'center'}}>
+          CART({cart.length})
+        </Grid>
+      </Grid>
     </>
   )
 };
