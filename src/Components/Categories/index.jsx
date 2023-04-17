@@ -1,40 +1,29 @@
-import { Button, ButtonGroup } from "@mui/material";
-import { connect } from "react-redux";
-import { set } from "../../Store/reducer";
+import { Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { set } from "../../Store/actions";
 
 
 //-----Category Display Function-----\\
-const Categories = ({ categories, set }) => {
+const Categories = () => {
+  const { categories } = useSelector((state) => state.categories);
+  const dispatch = useDispatch();
+
   return (
     <>
-      <h2>These are da Categories</h2>
-      <ButtonGroup variant="text" aria-label="category button group">
-        {
-          categories.map((category, idx) => (
-            <Button
-              key={`categories-${idx}`}
-              onClick={() => set(category)}
-            >
-              {category.displayName}
-            </Button>
-          ))
-        }
-      </ButtonGroup>
+      <h3>Browse our categories</h3>
+      {
+        categories.map((category, idx) => (
+          <Button
+          key={`categories - ${idx}`}
+          onClick={() => dispatch(set(category))}
+          >
+            {category.displayName}
+          </Button>
+        ))
+      }
     </>
   )
-};
-
-//-----Map State To Props-----\\
-const mapStateToProps = ({ store }) => {
-  return {
-    categories: store.categories,
-  }
 }
 
-//-----Map Dispatch To Props-----\\
-const mapDispatchToProps = {
-  set,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default Categories;
 
